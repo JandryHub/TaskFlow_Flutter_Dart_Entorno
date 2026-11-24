@@ -68,3 +68,16 @@ direcciones de un servidor ya conectado.
 - Campos recibidos: `id`, `title`, `completed`, `userId`
 - Valores completados por TaskFlow: `description` usa `Sin descripción (API)` y `priority` usa `Sin prioridad (API)`
 - Marcar una tarea como completada solo modifica la copia en memoria. Reiniciar la aplicación vuelve a mostrar los datos remotos originales.
+
+## Sesión 8: estados asíncronos
+
+La lista distingue carga, tareas disponibles, respuesta vacía y error. Se puede consultar de nuevo con el botón de actualizar o deslizando la lista hacia abajo; después de un error, usa **Reintentar** para recuperar las tareas sin reiniciar la aplicación.
+
+Para comprobar cada estado:
+
+- **Carga:** limita temporalmente la velocidad de red del emulador y abre la lista.
+- **Éxito:** usa conexión a internet y conserva `userId = 2` en `TaskApiService`.
+- **Vacío:** cambia temporalmente `userId` a `9999` en `TaskApiService`; al terminar, restáuralo a `2`.
+- **Error y reintento:** desactiva la conexión del emulador, actualiza la lista y pulsa **Reintentar** después de restablecer la conexión.
+
+Una actualización vuelve a consultar el servidor, por lo que las marcas locales de completado pueden desaparecer.

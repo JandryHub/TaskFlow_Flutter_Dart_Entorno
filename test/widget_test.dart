@@ -20,5 +20,6 @@ void main() {
 
     expect(find.text('Mis tareas'), findsOneWidget);
     expect(find.text('Revisar apuntes de Flutter'), findsOneWidget);
+    expect(find.text('Subir evidencia al repositorio'), findsOneWidget);
   });
 }

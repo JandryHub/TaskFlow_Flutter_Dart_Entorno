@@ -6,9 +6,10 @@ import 'package:taskflow/features/tasks/data/task_repository.dart';
 import 'package:taskflow/features/tasks/presentation/tasks_view_model.dart';
 
 void main() {
-  testWidgets('muestra la lista de tareas en MVVM', (WidgetTester tester) async {
+  testWidgets('muestra la lista de tareas', (WidgetTester tester) async {
     final TaskRepository repository = LocalTaskRepository();
     final viewModel = TasksViewModel(repository);
+    await viewModel.loadTasks();
 
     await tester.pumpWidget(
       ChangeNotifierProvider<TasksViewModel>(

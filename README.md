@@ -60,3 +60,11 @@ DELETE /tasks/:id eliminar tarea
 
 La API concreta se elegirá después. Estas rutas son requisitos, no
 direcciones de un servidor ya conectado.
+
+## API de tareas
+
+- URL: `https://jsonplaceholder.typicode.com/todos`
+- Filtro: `userId=2`
+- Campos recibidos: `id`, `title`, `completed`, `userId`
+- Valores completados por TaskFlow: `description` usa `Sin descripción (API)` y `priority` usa `Sin prioridad (API)`
+- Marcar una tarea como completada solo modifica la copia en memoria. Reiniciar la aplicación vuelve a mostrar los datos remotos originales.

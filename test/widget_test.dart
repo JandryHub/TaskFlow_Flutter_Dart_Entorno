@@ -2,12 +2,19 @@
 import 'package:taskflow/main.dart';
 
 void main() {
-  testWidgets('Renderiza listado de tareas con ListView.builder', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('Navega entre listado y detalle', (WidgetTester tester) async {
     await tester.pumpWidget(const TaskFlowApp());
 
     expect(find.text('Mis tareas'), findsOneWidget);
-    expect(find.text('Leer documentación'), findsOneWidget);
+    await tester.tap(find.text('Leer documentación'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Detalle de tarea'), findsOneWidget);
+    expect(find.text('Prioridad: Alta'), findsOneWidget);
+
+    await tester.tap(find.text('Volver al listado'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Mis tareas'), findsOneWidget);
   });
 }

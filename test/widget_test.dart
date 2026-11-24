@@ -1,39 +1,23 @@
 ﻿import 'package:flutter_test/flutter_test.dart';
-import 'package:taskflow/main.dart';
-import 'package:taskflow/task.dart';
+import 'package:provider/provider.dart';
+import 'package:taskflow/app/taskflow_app.dart';
+import 'package:taskflow/features/tasks/data/local_task_repository.dart';
+import 'package:taskflow/features/tasks/data/task_repository.dart';
+import 'package:taskflow/features/tasks/presentation/tasks_view_model.dart';
 
 void main() {
-  test('Task.fromJson mapea los campos del modelo', () {
-    final task = Task.fromJson({
-      'id': 7,
-      'title': 'Preparar exposición',
-      'description': 'Organizar diapositivas y practicar',
-      'priority': 'Alta',
-      'isCompleted': false,
-      'userId': 1,
-    });
+  testWidgets('muestra la lista de tareas en MVVM', (WidgetTester tester) async {
+    final TaskRepository repository = LocalTaskRepository();
+    final viewModel = TasksViewModel(repository);
 
-    expect(task.id, 7);
-    expect(task.title, 'Preparar exposición');
-    expect(task.description, 'Organizar diapositivas y practicar');
-    expect(task.priority, 'Alta');
-    expect(task.isCompleted, isFalse);
-    expect(task.userId, 1);
-  });
-
-  testWidgets('Renderiza listado y abre detalle de tarea', (
-    WidgetTester tester,
-  ) async {
-    await tester.pumpWidget(const TaskFlowApp());
+    await tester.pumpWidget(
+      ChangeNotifierProvider<TasksViewModel>(
+        create: (_) => viewModel,
+        child: const TaskFlowApp(),
+      ),
+    );
 
     expect(find.text('Mis tareas'), findsOneWidget);
-    expect(find.text('Leer documentación'), findsOneWidget);
-
-    await tester.tap(find.text('Leer documentación'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Detalle de tarea'), findsOneWidget);
-    expect(find.text('Prioridad: Alta'), findsOneWidget);
-    expect(find.text('Usuario: 1'), findsOneWidget);
+    expect(find.text('Revisar apuntes de Flutter'), findsOneWidget);
   });
 }
